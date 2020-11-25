@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AA6912E2256EF1A200E510B5 /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6912E1256EF1A200E510B5 /* WeatherModel.swift */; };
 		AAF5487C254C61760024F163 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF5487B254C61760024F163 /* AppDelegate.swift */; };
 		AAF5487E254C61760024F163 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF5487D254C61760024F163 /* SceneDelegate.swift */; };
 		AAF54880254C61760024F163 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF5487F254C61760024F163 /* FirstViewController.swift */; };
@@ -36,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AA6912E1256EF1A200E510B5 /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
 		AAF54878254C61750024F163 /* Værvarsler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Værvarsler.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAF5487B254C61760024F163 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AAF5487D254C61760024F163 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -78,6 +80,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AA6912DD256EF11100E510B5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				AA6912E1256EF1A200E510B5 /* WeatherModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		AA6912DE256EF11A00E510B5 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				AAF54883254C61760024F163 /* Main.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		AA6912E0256EF13900E510B5 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				AAF5487F254C61760024F163 /* FirstViewController.swift */,
+				AAF54881254C61760024F163 /* SecondViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		AAF5486F254C61750024F163 = {
 			isa = PBXGroup;
 			children = (
@@ -101,11 +128,11 @@
 		AAF5487A254C61760024F163 /* Værvarsler */ = {
 			isa = PBXGroup;
 			children = (
+				AA6912E0256EF13900E510B5 /* Controller */,
+				AA6912DE256EF11A00E510B5 /* View */,
+				AA6912DD256EF11100E510B5 /* Model */,
 				AAF5487B254C61760024F163 /* AppDelegate.swift */,
 				AAF5487D254C61760024F163 /* SceneDelegate.swift */,
-				AAF5487F254C61760024F163 /* FirstViewController.swift */,
-				AAF54881254C61760024F163 /* SecondViewController.swift */,
-				AAF54883254C61760024F163 /* Main.storyboard */,
 				AAF54886254C61790024F163 /* Assets.xcassets */,
 				AAF54888254C61790024F163 /* LaunchScreen.storyboard */,
 				AAF5488B254C61790024F163 /* Info.plist */,
@@ -266,6 +293,7 @@
 				AAF54880254C61760024F163 /* FirstViewController.swift in Sources */,
 				AAF5487C254C61760024F163 /* AppDelegate.swift in Sources */,
 				AAF5487E254C61760024F163 /* SceneDelegate.swift in Sources */,
+				AA6912E2256EF1A200E510B5 /* WeatherModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,14 +466,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "Værvarsler/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.10042.V-rvarsler";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -455,14 +486,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "Værvarsler/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.10042.V-rvarsler";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
