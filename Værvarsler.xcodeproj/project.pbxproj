@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AA6912E2256EF1A200E510B5 /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6912E1256EF1A200E510B5 /* WeatherModel.swift */; };
+		AA6912E2256EF1A200E510B5 /* WeatherAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6912E1256EF1A200E510B5 /* WeatherAPI.swift */; };
+		AA6912E4256F087300E510B5 /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6912E3256F087300E510B5 /* WeatherData.swift */; };
+		AA6912E6256FD78400E510B5 /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6912E5256FD78400E510B5 /* WeatherModel.swift */; };
 		AAF5487C254C61760024F163 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF5487B254C61760024F163 /* AppDelegate.swift */; };
 		AAF5487E254C61760024F163 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF5487D254C61760024F163 /* SceneDelegate.swift */; };
 		AAF54880254C61760024F163 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF5487F254C61760024F163 /* FirstViewController.swift */; };
@@ -37,7 +39,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		AA6912E1256EF1A200E510B5 /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
+		AA6912E1256EF1A200E510B5 /* WeatherAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAPI.swift; sourceTree = "<group>"; };
+		AA6912E3256F087300E510B5 /* WeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
+		AA6912E5256FD78400E510B5 /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
 		AAF54878254C61750024F163 /* Værvarsler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Værvarsler.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAF5487B254C61760024F163 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AAF5487D254C61760024F163 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -83,7 +87,9 @@
 		AA6912DD256EF11100E510B5 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				AA6912E1256EF1A200E510B5 /* WeatherModel.swift */,
+				AA6912E1256EF1A200E510B5 /* WeatherAPI.swift */,
+				AA6912E3256F087300E510B5 /* WeatherData.swift */,
+				AA6912E5256FD78400E510B5 /* WeatherModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -292,8 +298,10 @@
 				AAF54882254C61760024F163 /* SecondViewController.swift in Sources */,
 				AAF54880254C61760024F163 /* FirstViewController.swift in Sources */,
 				AAF5487C254C61760024F163 /* AppDelegate.swift in Sources */,
+				AA6912E6256FD78400E510B5 /* WeatherModel.swift in Sources */,
 				AAF5487E254C61760024F163 /* SceneDelegate.swift in Sources */,
-				AA6912E2256EF1A200E510B5 /* WeatherModel.swift in Sources */,
+				AA6912E4256F087300E510B5 /* WeatherData.swift in Sources */,
+				AA6912E2256EF1A200E510B5 /* WeatherAPI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,6 +413,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -458,6 +467,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

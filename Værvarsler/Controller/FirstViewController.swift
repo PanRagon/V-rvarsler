@@ -9,11 +9,11 @@
 import UIKit
 
 class FirstViewController: UIViewController {
-    let weatherModel = WeatherModel();
+    let weatherAPI = WeatherAPI();
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        weatherModel.fetchWeather(lat: 59.911166, lon: 10.744810)
+        weatherAPI.fetchWeather(lat: 59.911166, lon: 10.744810)
     }
 
 
