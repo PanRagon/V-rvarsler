@@ -14,13 +14,13 @@ struct WeatherModel {
     let temperatureUnits: String
     let precipitationUnits: String
     
-    let instantTemperature: Float
+    let instantTemperature: Int8
     
     let nextHourCode: String
-    let nextHourPrecipitation: Float
+    let nextHourPrecipitation: Int8
     
     let next6HoursCode: String
-    let next6HoursPrecipitation: Float
+    let next6HoursPrecipitation: Int8
     
     let next12HoursCode: String
     
@@ -34,14 +34,14 @@ struct WeatherModel {
             
             weather = String(sub)
         }
-        
+        //Her er det ikke helt tydelig fra oppgaven om man bør oversette alle symbolene eller bare til "nærmeste" (f.eks. burde heavyrainshowersandthunder kanskje bare være 'Regn' eller 'Tung Regn'), men jeg har i hvert fall tolket det som at vi kan presentere hele spekteret av vær som kommer ut av APIet. Jeg oversetter derfor hvert symbol for seg selv, selv om dette er litt mer verbøst i denne delen.
         switch weather {
         case "clearday":
             return "Sol"
         case "cloudy":
             return "Overskyet"
         case "fair":
-            return "Lett overskyet"
+            return "Lett Overskyet"
         case "fog":
             return "Tåke"
         case "heavyrain":
@@ -68,14 +68,61 @@ struct WeatherModel {
             return "Kraftig Snøbyger og Torden"
         case "lightrain":
             return "Lett Regn"
+        case "lightrainandthunder":
+            return "Lett Regn og Torden"
         case "lightrainshowers":
             return "Lette Regnbyger"
+        case "lightrainshowersandthunder":
+            return "Lette Regnbyger og Torden"
+        case "lightsleet":
+            return "Lett Sludd"
+        case "lightsleetandthunder":
+            return "Lett Sludd og Torden"
+        case "lightsleetshowers":
+            return "Lette Sluddbyger"
+        case "lightsnow":
+            return "Lett Snø"
+        case "lightsnowandthunder":
+            return "Lett Snø og Torden"
+        case "lightsnowshowers":
+            return "Lett Snøbyger"
+        case "lightssleetshowersandthunder":
+            return "Lette Sluddbyger og Torden"
+        case "lightssnowshowersandthunder":
+            return "Lette Snøbyger og Torden"
+        case "partlycloudy":
+            return "Delvis Overskyet"
+        case "rain":
+            return "Regn"
+        case "rainandthunder":
+            return "Regn og Torden"
+        case "rainshowers":
+            return "Regnbyger"
+        case "rainshowersandthunder":
+            return "Regnbyger og Torden"
+        case "sleet":
+            return "Sludd"
+        case "sleetandthunder":
+            return "Sludd og Torden"
+        case "sleetshowers":
+            return "Sluddbyger"
+        case "sleetshowersandthunder":
+            return "Sluddbyger og Torden"
+        case "snow":
+            return "Snø"
+        case "snowandthunder":
+            return "Snø og Torden"
+        case "snowshowers":
+            return "Snøbyger"
+        case "snowshowersandthunder":
+            return "Snøbyger og Torden"
             
-        //Jeg bruker dette som "errorhandling" dersom vi får inn noe uventet
-        //fra APIet. Det kan for eksempel tenke seg at met vil legge til nye
-        //kategorier i framtiden. I dette tilfellet mener jeg det gir mer mening at
+            
+        //Jeg bruker dette som en "errorhandling" dersom vi får inn noe uventet
+        //fra APIet. Det kan for eksempel tenke seg at met vil legge til nye eller endrer på
+        //koder i framtiden. I dette tilfellet mener jeg det gir mer mening at
         //vi bare viser symbolcoden i appen enn en feilmelding som ikke gir brukeren
-        //noe informasjon om været
+        //noe faktisk informasjon om været
         default:
             return weather
         }

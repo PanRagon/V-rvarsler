@@ -38,17 +38,17 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func didUpdateWeather(_ weatherAPI: WeatherAPI, weather: WeatherModel) {
         self.weather = weather
         cells = []
-        let temperature = String(format: "%.1", weather.instantTemperature) + " " + weather.temperatureUnits
+        let temperature = String(weather.instantTemperature) + " " + weather.temperatureUnits
         let instant = CellContent(name:"Nå", description:"Temperatur", content:temperature, precipitation:nil)
         cells.append(instant)
         
         let nextHourWeather = weather.getWeatherString(symbolCode: weather.nextHourCode)
-        let nextHourPrecipitation = String(format: "%.1", weather.nextHourPrecipitation) + " " + weather.precipitationUnits
+        let nextHourPrecipitation = String(weather.nextHourPrecipitation) + " " + weather.precipitationUnits
         let nextHour = CellContent(name:"Neste time", description:"Vær", content:nextHourWeather, precipitation: nextHourPrecipitation)
         cells.append(nextHour)
         
         let next6HoursWeather = weather.getWeatherString(symbolCode: weather.next6HoursCode)
-        let next6HoursPrecipitation = String(format: "%.1", weather.nextHourPrecipitation) + " " + weather.precipitationUnits
+        let next6HoursPrecipitation = String(weather.nextHourPrecipitation) + " " + weather.precipitationUnits
         let next6Hours = CellContent(name:"Neste 6 timer", description: "Vær", content:next6HoursWeather, precipitation: next6HoursPrecipitation)
         cells.append(next6Hours)
         
@@ -70,7 +70,6 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {        let cell = tableView.dequeueReusableCell(withIdentifier: "WeatherCell", for: indexPath) as! WeatherCell
-        cell.backgroundColor = UIColor.purple
         //IndexPath gir et array med to tall hovr det andre tallet er den faktiske posisjonen i arrayet, jeg bruker indexPath[1] for å aksessere denne
         cell.timeLabel.text = cells[indexPath[1]].name
         cell.descriptionLabel.text = cells[indexPath[1]].description
