@@ -82,7 +82,7 @@ struct Summary: Decodable {
 }
 
 struct FutureDetails: Decodable {
-    let precipitationAmount: Int
+    let precipitationAmount: Float
     
     enum CodingKeys: String, CodingKey {
         case precipitationAmount = "precipitation_amount"
