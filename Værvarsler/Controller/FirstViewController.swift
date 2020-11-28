@@ -9,13 +9,17 @@
 import UIKit
 
 class WeatherCell: UITableViewCell {
-    @IBOutlet weak var timeLabel:UILabel?
+    @IBOutlet weak var timeLabel:UILabel!
+    @IBOutlet var descriptionLabel: UILabel!
+    @IBOutlet var typeLabel: UILabel!
+    @IBOutlet var precipitationLabel: UILabel!
 }
 
 class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, WeatherAPIDelegate {
     
     var weatherAPI = WeatherAPI();
     var cells: [CellContent] = [CellContent(name:"H",description: "h", content:"h", precipitation:nil)]
+    @IBOutlet var locationLabel: UILabel!
     @IBOutlet var tableView: UITableView!
     var weather: WeatherModel? = nil
     override func viewDidLoad() {
@@ -25,6 +29,7 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         weatherAPI.delegate = self
         weatherAPI.fetchWeather(lat:59.911166, lon:10.744810)
+        locationLabel.text = "Høyskolen Kristiania"
     }
     
     
@@ -48,7 +53,7 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         cells.append(next6Hours)
         
         let next12HoursWeather = weather.getWeatherString(symbolCode: weather.next12HoursCode)
-        let next12Hours = CellContent(name:"Next 12 timer", description: "Vær", content:next12HoursWeather, precipitation:nil)
+        let next12Hours = CellContent(name:"Neste 12 timer", description: "Vær", content:next12HoursWeather, precipitation:nil)
         cells.append(next12Hours)
         
         print(cells)
@@ -64,8 +69,13 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         return cells.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {        let cell = tableView.dequeueReusableCell(withIdentifier: "PlainCell", for: indexPath)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {        let cell = tableView.dequeueReusableCell(withIdentifier: "WeatherCell", for: indexPath) as! WeatherCell
         cell.backgroundColor = UIColor.purple
+        //IndexPath gir et array med to tall hovr det andre tallet er den faktiske posisjonen i arrayet, jeg bruker indexPath[1] for å aksessere denne
+        cell.timeLabel.text = cells[indexPath[1]].name
+        cell.descriptionLabel.text = cells[indexPath[1]].description
+        cell.typeLabel.text = cells[indexPath[1]].content
+        cell.precipitationLabel.text = cells[indexPath[1]].precipitation
         return cell
     }
 

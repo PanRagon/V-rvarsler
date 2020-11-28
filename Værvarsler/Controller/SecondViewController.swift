@@ -26,21 +26,23 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate {
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.startUpdatingLocation()
+        } else {
+            //Hvis bruker ikke gir oss tilgang så viser vi bare HK
+            let initialLocation = CLLocation(latitude: 59.911166, longitude:10.744810)
+            locationManager.startUpdatingLocation()
+            mapView.centerToLocation(initialLocation)
         }
-        let initialLocation = CLLocation(latitude: 59.911166, longitude:10.744810)
-        
-        mapView.centerToLocation(initialLocation)
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else {return}
-        print("location = \(locValue.latitude) \(locValue.longitude)")
-        
+        //Denne løsningen for å oppdatere location til brukerens posisjon er tatt herifra: https://stackoverflow.com/a/25451592/14283546
+        if let location = locations.last{
+            let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+            let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+            self.mapView.setRegion(region, animated: true)
+        }
     }
     
-    
-
-
 }
 
 private extension MKMapView {
