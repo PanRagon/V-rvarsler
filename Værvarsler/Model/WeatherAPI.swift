@@ -51,7 +51,8 @@ struct WeatherAPI {
             let temperatureUnits = decodedData.properties.meta.units.airTemperatureUnit
             let precipitationUnits = decodedData.properties.meta.units.precipitationAmountUnit
             
-            //I eksempelene på oppgaven vises temperatur og nedbør i hele tall, fra APIet kommer de som tall med ett desimalltall. Derfor runder jeg dem her til nærmeste heltall og caster til Int8, da vi ikke ønsker bevare desimaltallene og -128c til 127c uansett dekker hele spekteret av temperaturer på jorden
+            //I eksempelene på oppgaven vises temperatur og nedbør i hele tall, fra APIet kommer de som tall med ett desimalltall. Derfor runder jeg dem her til nærmeste heltall og caster til Int8, da vi ikke ønsker bevare desimaltallene og -128c til 127c uansett dekker hele spekteret av temperaturer på jordens overflate.
+            //Merk: Dette kan føre til problemer dersom global oppvarming går av skaftet - dette har jeg ikke tatt høyde for.
             let instantTemperature = Int8(round(decodedData.properties.timeseries[1].data.instant.details.airTemperature))
             
             let nextHourCode = decodedData.properties.timeseries[1].data.nextHour!.summary.symbolCode

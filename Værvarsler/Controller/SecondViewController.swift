@@ -28,7 +28,7 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate {
             locationManager.startUpdatingLocation()
         } else {
             //Hvis bruker ikke gir oss tilgang så viser vi bare HK
-            let initialLocation = CLLocation(latitude: 59.911166, longitude:10.744810)
+            let initialLocation = CLLocation(latitude: CLLocationDegrees(LocationData.data.lat), longitude:CLLocationDegrees(LocationData.data.lon))
             locationManager.startUpdatingLocation()
             mapView.centerToLocation(initialLocation)
         }
@@ -40,6 +40,8 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate {
             let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
             let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
             self.mapView.setRegion(region, animated: true)
+            LocationData.data.lat = location.coordinate.latitude
+            LocationData.data.lon = location.coordinate.longitude
         }
     }
     

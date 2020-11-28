@@ -15,7 +15,10 @@ class WeatherCell: UITableViewCell {
     @IBOutlet var precipitationLabel: UILabel!
 }
 
-class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, WeatherAPIDelegate {
+
+
+
+class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, WeatherAPIDelegate, LocationDataDelegate {
     
     var weatherAPI = WeatherAPI();
     var cells: [CellContent] = [CellContent(name:"H",description: "h", content:"h", precipitation:nil)]
@@ -26,11 +29,15 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        
         weatherAPI.delegate = self
-        weatherAPI.fetchWeather(lat:59.911166, lon:10.744810)
-        locationLabel.text = "Høyskolen Kristiania"
+        weatherAPI.fetchWeather(lat:LocationData.data.lat, lon:LocationData.data.lon)
+        renderedLocation.lat = LocationData.data.lat
+        renderedLocation.lon = LocationData.data.lon
+        if(LocationData.data.lat == 59.911166 && LocationData.data.lon == 10.744810) {
+            locationLabel.text = "Høyskolen Kristiania"
+        }
     }
+    
     
     
     
