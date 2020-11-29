@@ -40,7 +40,7 @@ struct WeatherModel {
         }
         //Her er det ikke helt tydelig fra oppgaven om man bør oversette alle symbolene eller bare til "nærmeste" (f.eks. burde heavyrainshowersandthunder kanskje bare være 'Regn' eller 'Tung Regn'), men jeg har i hvert fall tolket det som at vi kan presentere hele spekteret av vær som kommer ut av APIet. Jeg oversetter derfor hvert symbol for seg selv, selv om dette er litt mer verbøst i denne delen.
         switch weather {
-        case "clearday":
+        case "clearsky":
             return "Sol"
         case "cloudy":
             return "Overskyet"

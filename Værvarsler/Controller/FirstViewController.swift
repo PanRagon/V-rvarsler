@@ -18,32 +18,50 @@ class WeatherCell: UITableViewCell {
 
 
 
-class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, WeatherAPIDelegate, LocationDataDelegate {
+class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, WeatherAPIDelegate {
+    
     
     var weatherAPI = WeatherAPI();
-    var cells: [CellContent] = [CellContent(name:"H",description: "h", content:"h", precipitation:nil)]
+    var cells: [CellContent] = []
     @IBOutlet var locationLabel: UILabel!
     @IBOutlet var tableView: UITableView!
     var weather: WeatherModel? = nil
+    var lat: Float = LocationData.data.lat
+    var lon: Float = LocationData.data.lon
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
         weatherAPI.delegate = self
-        weatherAPI.fetchWeather(lat:LocationData.data.lat, lon:LocationData.data.lon)
-        renderedLocation.lat = LocationData.data.lat
-        renderedLocation.lon = LocationData.data.lon
-        if(LocationData.data.lat == 59.911166 && LocationData.data.lon == 10.744810) {
-            locationLabel.text = "Høyskolen Kristiania"
+        weatherAPI.fetchWeather(lat:lat, lon:lon)
+        renderLocationLabel()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if(LocationData.data.lat != lat || LocationData.data.lon != lon) {
+            updatedRenderedLocation(lat: LocationData.data.lat, lon: LocationData.data.lon)
+            weatherAPI.fetchWeather(lat: lat, lon: lon)
+            renderLocationLabel()
         }
     }
     
+    func renderLocationLabel() {
+        if(lat == 59.911166 && lon == 10.744810) {
+            locationLabel.text = "Høyskolen Kristiania"
+        } else {
+            locationLabel.text = "\(lat), \(lon)"
+        }
+    }
     
-    
+    func updatedRenderedLocation(lat: Float, lon: Float) {
+        self.lat = lat
+        self.lon = lon
+    }
     
     
     func didUpdateWeather(_ weatherAPI: WeatherAPI, weather: WeatherModel) {
-        self.weather = weather
         cells = []
         let temperature = String(weather.instantTemperature) + " " + weather.temperatureUnits
         let instant = CellContent(name:"Nå", description:"Temperatur", content:temperature, precipitation:nil)
@@ -62,14 +80,15 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let next12HoursWeather = weather.getWeatherString(symbolCode: weather.next12HoursCode)
         let next12Hours = CellContent(name:"Neste 12 timer", description: "Vær", content:next12HoursWeather, precipitation:nil)
         cells.append(next12Hours)
-        
-        print(cells)
         DispatchQueue.main.async { self.tableView.reloadData()}
         
     }
     
-    func didFailToUpdate(_ error: Error?) {
-        print(error)
+    func didFailToUpdate(_ error: Error) {
+        //Må kjøres i main-thread siden Toasten gjør endringer i layout engine.
+        DispatchQueue.main.async {
+            Toast.show(message: "Error: \(error.localizedDescription)", controller: self)
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section:Int) -> Int {

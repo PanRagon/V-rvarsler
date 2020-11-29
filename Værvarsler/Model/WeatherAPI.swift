@@ -12,7 +12,7 @@ import Foundation
 //Udemy kurs. Referert til i README
 protocol WeatherAPIDelegate {
     func didUpdateWeather(_ weatherAPI: WeatherAPI, weather: WeatherModel)
-    func didFailToUpdate(_ error: Error?)
+    func didFailToUpdate(_ error: Error)
 }
 struct WeatherAPI {
     let apiUrl = "https://api.met.no/weatherapi/locationforecast/2.0/compact.json"
@@ -29,7 +29,7 @@ struct WeatherAPI {
             let session = URLSession(configuration: .default);
             let task = session.dataTask(with: url) {(data, response, error) in
                 if error != nil {
-                    self.delegate?.didFailToUpdate(error)
+                    self.delegate?.didFailToUpdate(error!)
                 }
                 
                 if let safeData = data {
@@ -70,7 +70,9 @@ struct WeatherAPI {
             print(weather)
             return weather
         } catch {
-            delegate?.didFailToUpdate(error)
+            DispatchQueue.main.async {
+                self.delegate?.didFailToUpdate(error)
+            }
             return nil
         }
     }
