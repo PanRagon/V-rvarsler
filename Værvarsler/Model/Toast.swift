@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-//Denne implementasjonen av error toasts er tatt fra dette svaret på StackOverflow - https://stackoverflow.com/a/50710991 Den er universell og kan brukes fra alle ViewControllers. Jeg har kun endret constraints for å få den til å passe i skjermen
+//Denne implementasjonen av error toasts er tatt fra dette svaret på StackOverflow - https://stackoverflow.com/a/50710991 Den er universell og kan brukes fra alle ViewControllers. Jeg har kun endret constraints for å få den til å passe i skjermen og hvor lenge den er på skjermen
 class Toast {
     static func show(message: String, controller: UIViewController) {
         let toastContainer = UIView(frame: CGRect())
@@ -45,7 +45,7 @@ class Toast {
         UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseIn, animations: {
             toastContainer.alpha = 1.0
         }, completion: { _ in
-            UIView.animate(withDuration: 0.5, delay: 1.5, options: .curveEaseOut, animations: {
+            UIView.animate(withDuration: 0.5, delay: 3.5, options: .curveEaseOut, animations: {
                 toastContainer.alpha = 0.0
             }, completion: {_ in
                 toastContainer.removeFromSuperview()

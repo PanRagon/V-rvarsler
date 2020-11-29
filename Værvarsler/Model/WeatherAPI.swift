@@ -2,7 +2,7 @@
 //  WeatherModel.swift
 //  Værvarsler
 //
-//  Created by Kandidatnummer 10042 on 25/11/2020.
+//  Created by Kandidatnummer 10042 on 22/11/2020.
 //  Copyright © 2020 Kandidatnummer 10042. All rights reserved.
 //
 
@@ -21,6 +21,7 @@ struct WeatherAPI {
     
     func fetchWeather(lat: Float, lon: Float) {
         let url = "\(apiUrl)?lat=\(lat)&lon=\(lon)"
+        print(url)
         performRequest(urlString: url)
     }
     
@@ -29,11 +30,13 @@ struct WeatherAPI {
             let session = URLSession(configuration: .default);
             let task = session.dataTask(with: url) {(data, response, error) in
                 if error != nil {
+                    print("error in session maybe")
                     self.delegate?.didFailToUpdate(error!)
                 }
                 
                 if let safeData = data {
                     if let weather = self.parseJSON(weatherData: safeData) {
+                        print(weather)
                         self.delegate?.didUpdateWeather(self, weather: weather)
                     }
                 }
@@ -45,9 +48,10 @@ struct WeatherAPI {
     
     func parseJSON(weatherData: Data) -> WeatherModel? {
         let decoder = JSONDecoder()
+        print("parsing")
         do {
             let decodedData = try decoder.decode(WeatherData.self, from: weatherData)
-            
+            print(decodedData)
             let temperatureUnits = decodedData.properties.meta.units.airTemperatureUnit
             let precipitationUnits = decodedData.properties.meta.units.precipitationAmountUnit
             
@@ -63,14 +67,11 @@ struct WeatherAPI {
             
             let next12HoursCode = decodedData.properties.timeseries[1].data.next12Hours!.summary.symbolCode
             
-            
-            
-            
             let weather = WeatherModel(temperatureUnits:temperatureUnits, precipitationUnits:precipitationUnits, instantTemperature:instantTemperature, nextHourCode:nextHourCode, nextHourPrecipitation: nextHourPrecipitation, next6HoursCode: next6HoursCode,  next6HoursPrecipitation: next6HoursPrecipitation, next12HoursCode:next12HoursCode)
-            print(weather)
             return weather
         } catch {
             DispatchQueue.main.async {
+                print("error in data maybe")
                 self.delegate?.didFailToUpdate(error)
             }
             return nil

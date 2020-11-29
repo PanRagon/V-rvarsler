@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AA35B6EC2573AB3D00EB967A /* MapContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA35B6EB2573AB3D00EB967A /* MapContainerViewController.swift */; };
+		AA35B6EE2573F26600EB967A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA35B6ED2573F26600EB967A /* HomeViewController.swift */; };
+		AA35B6F025741DDA00EB967A /* MapWeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA35B6EF25741DDA00EB967A /* MapWeatherView.swift */; };
 		AA6912E2256EF1A200E510B5 /* WeatherAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6912E1256EF1A200E510B5 /* WeatherAPI.swift */; };
 		AA6912E4256F087300E510B5 /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6912E3256F087300E510B5 /* WeatherData.swift */; };
 		AA6912E6256FD78400E510B5 /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6912E5256FD78400E510B5 /* WeatherModel.swift */; };
@@ -42,6 +45,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AA35B6EB2573AB3D00EB967A /* MapContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapContainerViewController.swift; sourceTree = "<group>"; };
+		AA35B6ED2573F26600EB967A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		AA35B6EF25741DDA00EB967A /* MapWeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapWeatherView.swift; sourceTree = "<group>"; };
 		AA6912E1256EF1A200E510B5 /* WeatherAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAPI.swift; sourceTree = "<group>"; };
 		AA6912E3256F087300E510B5 /* WeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
 		AA6912E5256FD78400E510B5 /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
@@ -114,6 +120,9 @@
 			children = (
 				AAF5487F254C61760024F163 /* FirstViewController.swift */,
 				AAF54881254C61760024F163 /* SecondViewController.swift */,
+				AA35B6EB2573AB3D00EB967A /* MapContainerViewController.swift */,
+				AA35B6ED2573F26600EB967A /* HomeViewController.swift */,
+				AA35B6EF25741DDA00EB967A /* MapWeatherView.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -302,12 +311,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA35B6EC2573AB3D00EB967A /* MapContainerViewController.swift in Sources */,
 				AA6912EB2572D17500E510B5 /* LocationData.swift in Sources */,
 				AAF54882254C61760024F163 /* SecondViewController.swift in Sources */,
 				AAF54880254C61760024F163 /* FirstViewController.swift in Sources */,
+				AA35B6F025741DDA00EB967A /* MapWeatherView.swift in Sources */,
 				AAF5487C254C61760024F163 /* AppDelegate.swift in Sources */,
 				AA6912E6256FD78400E510B5 /* WeatherModel.swift in Sources */,
 				AAF5487E254C61760024F163 /* SceneDelegate.swift in Sources */,
+				AA35B6EE2573F26600EB967A /* HomeViewController.swift in Sources */,
 				AA6912E4256F087300E510B5 /* WeatherData.swift in Sources */,
 				AA6912ED25732DCE00E510B5 /* Toast.swift in Sources */,
 				AA6912E2256EF1A200E510B5 /* WeatherAPI.swift in Sources */,
@@ -405,7 +417,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -465,6 +477,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;

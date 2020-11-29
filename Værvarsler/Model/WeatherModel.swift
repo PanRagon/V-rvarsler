@@ -24,8 +24,7 @@ struct WeatherModel {
     
     let next12HoursCode: String
     
-    
-    func getWeatherString(symbolCode: String) -> String {
+    func getUmbrellaIcon(symbolCode: String) -> String {
         var weather: String
         //Vi splitter arrayet på "_" og fjerner det som kommer etter, da detter er bare natt/dag som vi ikke skal bruke i appen uansett.
         //Koden tatt her basert på dette svaret fra StackOverflow: https://stackoverflow.com/a/39185097
@@ -36,6 +35,45 @@ struct WeatherModel {
         } else {
             //Hvis den ikke har med _night/_day i det hele tatt vil vi bare sende
             //symbolCode
+            weather = symbolCode
+        }
+        if(weather.contains("rain")) {
+            return "Regn"
+        } else{
+            return "Sol"
+        }
+    }
+    
+    func getWeatherIcon(symbolCode: String) -> String {
+        var weather: String
+        if let index = symbolCode.range(of: "_")?.lowerBound {
+            let sub = symbolCode[..<index]
+            
+            weather = String(sub)
+        } else {
+            weather = symbolCode
+        }
+        if(weather.contains("rain")) {
+            return "rain"
+        } else if (weather.contains("fog")) {
+            return "fog"
+        } else if (weather.contains("sleet")) {
+            return "sleet"
+        } else if (weather.contains("snow")) {
+            return "snow"
+        } else if (weather.contains("cloudy")) {
+            return "cloudy"
+        }
+        return "sun"
+    }
+    
+    func getWeatherString(symbolCode: String) -> String {
+        var weather: String
+        if let index = symbolCode.range(of: "_")?.lowerBound {
+            let sub = symbolCode[..<index]
+            
+            weather = String(sub)
+        } else {
             weather = symbolCode
         }
         //Her er det ikke helt tydelig fra oppgaven om man bør oversette alle symbolene eller bare til "nærmeste" (f.eks. burde heavyrainshowersandthunder kanskje bare være 'Regn' eller 'Tung Regn'), men jeg har i hvert fall tolket det som at vi kan presentere hele spekteret av vær som kommer ut av APIet. Jeg oversetter derfor hvert symbol for seg selv, selv om dette er litt mer verbøst i denne delen.

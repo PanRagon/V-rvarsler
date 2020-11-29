@@ -18,7 +18,7 @@ class WeatherCell: UITableViewCell {
 
 
 
-class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, WeatherAPIDelegate {
+class WeatherViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, WeatherAPIDelegate {
     
     
     var weatherAPI = WeatherAPI();
