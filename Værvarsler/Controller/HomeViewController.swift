@@ -23,7 +23,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UIGesture
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        dateFormatter.locale = Locale(identifier: "No")
+        dateFormatter.locale = Locale(identifier: "no")
         self.locationManager.requestWhenInUseAuthorization()
         weatherAPI.delegate = self
         
@@ -33,6 +33,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UIGesture
             locationManager.startUpdatingLocation()
         } else {
             Toast.show(message: "Vi trenger din lokasjon for å gi deg værinformasjon på ditt sted", controller: self)
+            weatherAPI.fetchWeather(lat: LocationData.data.lat, lon: LocationData.data.lon)
         }
         
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
