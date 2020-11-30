@@ -10,13 +10,12 @@ import Foundation
 import CoreLocation
 import UIKit
 
-class HomeViewController: UIViewController, CLLocationManagerDelegate, UIGestureRecognizerDelegate, WeatherAPIDelegate {
+class HomeViewController: UIViewController, CLLocationManagerDelegate, WeatherAPIDelegate {
     @IBOutlet var dayLabel: UILabel!
     @IBOutlet var infoLabel: UILabel!
     let dateFormatter = DateFormatter()
     let defaults = UserDefaults.standard
     let locationManager = CLLocationManager()
-    var shouldSpin: Bool = true
     @IBOutlet var symbolImage: UIImageView!
     var weatherAPI = WeatherAPI()
     
@@ -26,11 +25,6 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UIGesture
         dateFormatter.locale = Locale(identifier: "No")
         self.locationManager.requestWhenInUseAuthorization()
         weatherAPI.delegate = self
-        if(self.defaults.string(forKey: "currentDay") != nil && self.defaults.string(forKey: "weather") != nil) {
-            self.dayLabel.text = self.defaults.string(forKey: "currentDay")
-            let img = self.defaults.string(forKey: "weather") == "Regn" ? "umbrella" : "sun"
-            self.symbolImage.image = UIImage(named: img)
-        }
         
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
@@ -40,34 +34,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UIGesture
             Toast.show(message: "Vi trenger din lokasjon for å gi deg værinformasjon", controller: self)
         }
         
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-        gestureRecognizer.delegate = self
-        symbolImage.addGestureRecognizer(gestureRecognizer)
     }
-    
-    @objc func handleTap(_ sender: UITapGestureRecognizer) {
-        if (sender.state == .ended) {
-            print("Tap")
-            if(shouldSpin) {
-                let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation")
-                rotateAnimation.fromValue = 0
-                rotateAnimation.toValue = CGFloat(Double.pi * 2)
-                rotateAnimation.duration = 3
-                symbolImage.layer.add(rotateAnimation, forKey: "360")
-            }
-        }
-    }
-    
-    /*func animate() {
-        //let timeInterval = 3
-        if(shouldSpin) {
-            let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation")
-            rotateAnimation.fromValue = 0
-            rotateAnimation.toValue = CGFloat(Double.pi * 2)
-            rotateAnimation.duration = 3
-            symbolImage.layer.add(rotateAnimation, forKey: "360")
-        }
-    }*/
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         //Denne løsningen for å oppdatere location til brukerens posisjon er tatt herifra: https://stackoverflow.com/a/25451592/14283546
@@ -81,6 +48,9 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UIGesture
         //Må kjøres i main-thread siden Toasten gjør endringer i layout engine.
         DispatchQueue.main.async {
             Toast.show(message: "Error: \(error.localizedDescription)", controller: self)
+            self.dayLabel.text = self.defaults.string(forKey: "currentDay")
+            let img = self.defaults.string(forKey: "weather") == "Regn" ? "umbrella" : "sun.max"
+            self.symbolImage.image = UIImage(named: img)
         }
     }
     func didUpdateWeather(_ weatherAPI: WeatherAPI, weather: WeatherModel) {

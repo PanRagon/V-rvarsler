@@ -56,7 +56,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
             let location = sender.location(in: mapView)
             mapLocation = mapView.convert(location, toCoordinateFrom: mapView)
             pin.coordinate = mapView.convert(location, toCoordinateFrom: mapView)
-            NotificationCenter.default.post(name: .didRecieveMapLocation, object: nil, userInfo: ["lat":Float(mapLocation.latitude), "lon":Float(mapLocation.longitude)])
+            NotificationCenter.default.post(name: .didRecieveLocation, object: nil, userInfo: ["lat":Float(mapLocation.latitude), "lon":Float(mapLocation.longitude)])
         }
     }
     
@@ -69,10 +69,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
             let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
             self.mapView.setRegion(region, animated: true)
             pin.coordinate = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-            //LocationData.data.setLocation(lat: Float(location.coordinate.latitude), lon: Float(location.coordinate.longitude))
+            LocationData.data.setLocation(lat: Float(location.coordinate.latitude), lon: Float(location.coordinate.longitude))
             mapLocation = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-            NotificationCenter.default.post(name: .didRecieveMapLocation, object: nil, userInfo: ["lat":Float(location.coordinate.latitude), "lon":Float(location.coordinate.longitude)])
-            NotificationCenter.default.post(name: .didRecieveUserLocation, object: nil, userInfo: ["lat":Float(location.coordinate.latitude), "lon":Float(location.coordinate.longitude)])
+            NotificationCenter.default.post(name: .didRecieveLocation, object: nil, userInfo: ["lat":Float(location.coordinate.latitude), "lon":Float(location.coordinate.longitude)])
         }
     }
     

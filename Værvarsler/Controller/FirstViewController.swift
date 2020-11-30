@@ -26,34 +26,24 @@ class WeatherViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet var locationLabel: UILabel!
     @IBOutlet var tableView: UITableView!
     var weather: WeatherModel? = nil
-    var lat: Float = 59.911166
-    var lon: Float = 10.744810
+    var lat: Float = LocationData.data.lat
+    var lon: Float = LocationData.data.lon
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
         weatherAPI.delegate = self
-        NotificationCenter.default.addObserver(self, selector: #selector(didUpdateUserLocation(_:)), name: .didRecieveMapLocation, object: nil)
         weatherAPI.fetchWeather(lat:lat, lon:lon)
         renderLocationLabel()
     }
     
-    /*override func viewDidAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-    
-        updatedRenderedLocation(lat: LocationData.data.lat, lon: LocationData.data.lon)
-        weatherAPI.fetchWeather(lat: lat, lon: lon)
-        renderLocationLabel()
-    }*/
-    
-    @objc func didUpdateUserLocation(_ notification: Notification) {
-        guard let lat = notification.userInfo!["lat"] as? Float else {return}
-        guard let lon = notification.userInfo!["lon"] as? Float else {return}
-        if(self.lat != lat || self.lon != lon) {
-           print("Update!")
-           self.lat = lat
-           self.lon = lon
-           weatherAPI.fetchWeather(lat: lat, lon: lon)
+        
+        if(LocationData.data.lat != lat || LocationData.data.lon != lon) {
+            updatedRenderedLocation(lat: LocationData.data.lat, lon: LocationData.data.lon)
+            weatherAPI.fetchWeather(lat: lat, lon: lon)
+            renderLocationLabel()
         }
     }
     
@@ -113,6 +103,8 @@ class WeatherViewController: UIViewController, UITableViewDelegate, UITableViewD
         cell.precipitationLabel.text = cells[indexPath[1]].precipitation
         return cell
     }
+
+
 
 }
 
