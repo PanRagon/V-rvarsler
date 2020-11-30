@@ -12,8 +12,8 @@ import UIKit
 
 class MapContainerViewController: UIViewController, WeatherAPIDelegate {
 
-    var lat: Float = 0.0
-    var lon: Float = 0.0
+    var lat: Float = LocationData.data.lat
+    var lon: Float = LocationData.data.lon
     @IBOutlet var lonLabel: UILabel!
     @IBOutlet var latLabel: UILabel!
     @IBOutlet var weatherSymbol: UIImageView!

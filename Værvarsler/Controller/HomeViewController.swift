@@ -10,11 +10,12 @@ import Foundation
 import CoreLocation
 import UIKit
 
-class HomeViewController: UIViewController, CLLocationManagerDelegate, WeatherAPIDelegate {
+class HomeViewController: UIViewController, CLLocationManagerDelegate, UIGestureRecognizerDelegate, WeatherAPIDelegate {
     @IBOutlet var dayLabel: UILabel!
     @IBOutlet var infoLabel: UILabel!
     let dateFormatter = DateFormatter()
     let defaults = UserDefaults.standard
+    var shouldSpin = true
     let locationManager = CLLocationManager()
     @IBOutlet var symbolImage: UIImageView!
     var weatherAPI = WeatherAPI()
@@ -31,9 +32,34 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, WeatherAP
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.startUpdatingLocation()
         } else {
-            Toast.show(message: "Vi trenger din lokasjon for å gi deg værinformasjon", controller: self)
+            Toast.show(message: "Vi trenger din lokasjon for å gi deg værinformasjon på ditt sted", controller: self)
         }
         
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        gestureRecognizer.delegate = self
+        symbolImage.addGestureRecognizer(gestureRecognizer)
+        
+    }
+    
+    @objc func handleTap(_ sender: UITapGestureRecognizer) {
+        if (sender.state == .ended && symbolImage.layer.animationKeys() == nil) {
+            if(shouldSpin) {
+                let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation")
+                rotateAnimation.fromValue = 0
+                rotateAnimation.toValue = CGFloat(Double.pi * 2)
+                rotateAnimation.duration = 3
+                rotateAnimation.autoreverses = true
+                symbolImage.layer.add(rotateAnimation, forKey: "360")
+            } else {
+                let scaleAnimation = CABasicAnimation(keyPath: "transform.scale")
+                scaleAnimation.fromValue = 1
+                scaleAnimation.toValue = 3
+                scaleAnimation.duration = 3
+                scaleAnimation.autoreverses = true
+                symbolImage.layer.add(scaleAnimation, forKey: "3")
+            }
+            shouldSpin = !shouldSpin
+        }
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

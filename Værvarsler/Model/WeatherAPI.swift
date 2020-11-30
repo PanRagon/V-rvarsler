@@ -59,6 +59,7 @@ struct WeatherAPI {
             //Merk: Dette kan føre til problemer dersom global oppvarming går av skaftet - dette har jeg ikke tatt høyde for.
             let instantTemperature = Int8(round(decodedData.properties.timeseries[1].data.instant.details.airTemperature))
             
+            //Jeg bruker timeseries[1] i stedenfor [0] fordi APIet gir alltid data fra en time tidligere først.
             let nextHourCode = decodedData.properties.timeseries[1].data.nextHour!.summary.symbolCode
             let nextHourPrecipitation = Int8(round(decodedData.properties.timeseries[1].data.nextHour!.details!.precipitationAmount))
             
