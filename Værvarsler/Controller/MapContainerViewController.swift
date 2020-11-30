@@ -12,8 +12,8 @@ import UIKit
 
 class MapContainerViewController: UIViewController, WeatherAPIDelegate {
 
-    var lat: Float = 0.0
-    var lon: Float = 0.0
+    var lat: Float = 59.911166
+    var lon: Float = 10.744810
     @IBOutlet var lonLabel: UILabel!
     @IBOutlet var latLabel: UILabel!
     @IBOutlet var weatherSymbol: UIImageView!
@@ -54,16 +54,11 @@ class MapContainerViewController: UIViewController, WeatherAPIDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         weatherAPI.delegate = self
-        NotificationCenter.default.addObserver(self, selector: #selector(didUpdateMapLocation(_:)), name: .didRecieveLocation, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didUpdateMapLocation(_:)), name: .didRecieveMapLocation, object: nil)
         //Jeg starter med å laste inn været på lokasjonen i LocationData, som er brukerens lokasjon, eller HK om de ikke har akseptert lokasjonsdata.
-        lat = LocationData.data.lat
-        lon = LocationData.data.lon
-        weatherAPI.fetchWeather(lat: LocationData.data.lat, lon: LocationData.data.lon)
+        //weatherAPI.fetchWeather(lat: LocationData.data.lat, lon: LocationData.data.lon)
         
         
     }
 }
 
-extension Notification.Name {
-    static let didRecieveLocation = Notification.Name("didRecieveLocation")
-}
