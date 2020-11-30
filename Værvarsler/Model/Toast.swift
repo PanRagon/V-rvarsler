@@ -1,10 +1,4 @@
-//
-//  Toast.swift
-//  Værvarsler
-//
-//  Created by Kandidatnummer 10042 on 29/11/2020.
-//  Copyright © 2020 Kandidatnummer 10042. All rights reserved.
-//
+
 
 import Foundation
 import UIKit

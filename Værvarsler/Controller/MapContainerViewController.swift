@@ -1,10 +1,3 @@
-//
-//  MapContainerViewController.swift
-//  Værvarsler
-//
-//  Created by Kandidatnummer 10042 on 28/11/2020.
-//  Copyright © 2020 Kandidatnummer 10042. All rights reserved.
-//
 
 import Foundation
 import UIKit
@@ -12,6 +5,7 @@ import UIKit
 
 class MapContainerViewController: UIViewController, WeatherAPIDelegate {
 
+    //Jeg starter med å laste inn været på lokasjonen i LocationData, som er brukerens lokasjon, eller HK om de ikke har akseptert lokasjonsdata.
     var lat: Float = LocationData.data.lat
     var lon: Float = LocationData.data.lon
     @IBOutlet var lonLabel: UILabel!
@@ -55,9 +49,6 @@ class MapContainerViewController: UIViewController, WeatherAPIDelegate {
         super.viewDidLoad()
         weatherAPI.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(didUpdateMapLocation(_:)), name: .didRecieveLocation, object: nil)
-        //Jeg starter med å laste inn været på lokasjonen i LocationData, som er brukerens lokasjon, eller HK om de ikke har akseptert lokasjonsdata.
-        lat = LocationData.data.lat
-        lon = LocationData.data.lon
         weatherAPI.fetchWeather(lat: LocationData.data.lat, lon: LocationData.data.lon)
         
         

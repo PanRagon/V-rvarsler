@@ -1,10 +1,4 @@
-//
-//  HomeViewController.swift
-//  Værvarsler
-//
-//  Created by Kandidatnummer 10042 on 29/11/2020.
-//  Copyright © 2020 Kandidatnummer 10042. All rights reserved.
-//
+
 
 import Foundation
 import CoreLocation
@@ -13,9 +7,11 @@ import UIKit
 class HomeViewController: UIViewController, CLLocationManagerDelegate, UIGestureRecognizerDelegate, WeatherAPIDelegate {
     @IBOutlet var dayLabel: UILabel!
     @IBOutlet var infoLabel: UILabel!
+    @IBOutlet var updatedLabel: UILabel!
     let dateFormatter = DateFormatter()
     let defaults = UserDefaults.standard
     var shouldSpin = true
+    var currentWeather: String? = nil
     let locationManager = CLLocationManager()
     @IBOutlet var symbolImage: UIImageView!
     var weatherAPI = WeatherAPI()
@@ -23,7 +19,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UIGesture
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        dateFormatter.locale = Locale(identifier: "no")
+        dateFormatter.locale = Locale(identifier: "nb")
+        dateFormatter.dateFormat = "dd/MM yyyy HH:mm"
         self.locationManager.requestWhenInUseAuthorization()
         weatherAPI.delegate = self
         
@@ -33,7 +30,16 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UIGesture
             locationManager.startUpdatingLocation()
         } else {
             Toast.show(message: "Vi trenger din lokasjon for å gi deg værinformasjon på ditt sted", controller: self)
-            weatherAPI.fetchWeather(lat: LocationData.data.lat, lon: LocationData.data.lon)
+        }
+        
+        if(self.defaults.string(forKey: "currentDay") != nil && self.defaults.string(forKey: "weather") != nil && self.defaults.string(forKey: "lastUpdated") != nil) {
+            self.dayLabel.text = self.defaults.string(forKey: "currentDay")
+            let storedWeather = self.defaults.string(forKey: "weather")
+            let img = storedWeather == "Regn" ? "umbrella" : "sun.max"
+            self.symbolImage.image = UIImage(named: img)
+            let date = String(self.defaults.string(forKey: "lastUpdated")!)
+            self.updatedLabel.text = "Sist oppdatert: \(date)"
+            currentWeather = storedWeather
         }
         
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
@@ -42,8 +48,24 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UIGesture
         
     }
     
+    func animations() {
+        DispatchQueue.main.async {
+            if(self.currentWeather == "Sol") {
+                UIView.animate(withDuration: 5, animations: {
+                    self.view.backgroundColor = UIColor.yellow
+                })
+                let slowRotate : CABasicAnimation = CABasicAnimation(keyPath: "transform.rotation.z")
+                slowRotate.toValue = NSNumber(value: Double.pi * 2)
+                slowRotate.duration = 30
+                slowRotate.isCumulative = true
+                slowRotate.repeatCount = Float.infinity
+                self.symbolImage.layer.add(slowRotate, forKey: "rotationAnimation")
+            }
+        }
+    }
+    
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
-        if (sender.state == .ended && symbolImage.layer.animationKeys() == nil) {
+        if (sender.state == .ended) {
             if(shouldSpin) {
                 let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation")
                 rotateAnimation.fromValue = 0
@@ -74,10 +96,9 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UIGesture
         //Må kjøres i main-thread siden Toasten gjør endringer i layout engine.
         DispatchQueue.main.async {
             Toast.show(message: "Error: \(error.localizedDescription)", controller: self)
-            self.dayLabel.text = self.defaults.string(forKey: "currentDay")
-            let img = self.defaults.string(forKey: "weather") == "Regn" ? "umbrella" : "sun.max"
-            self.symbolImage.image = UIImage(named: img)
         }
+        //Kjører animasjoner etter fetching er fullført.
+        animations()
     }
     func didUpdateWeather(_ weatherAPI: WeatherAPI, weather: WeatherModel) {
         let nextHourSymbol = weather.getUmbrellaIcon(symbolCode: weather.nextHourCode)
@@ -85,20 +106,25 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UIGesture
         let next12HoursSymbol = weather.getUmbrellaIcon(symbolCode: weather.next12HoursCode)
         
         let day = dateFormatter.weekdaySymbols[Calendar.current.component(.weekday, from: Date()) - 1]
-        print(day)
+        let date = dateFormatter.string(from: Date())
         DispatchQueue.main.async {
             self.dayLabel.text = day.capitalized(with: nil)
-            self.defaults.set(day, forKey: "currentDay")
+            self.updatedLabel.text = "Sist oppdatert: \(date)"
+            self.defaults.set(day.capitalized(with: nil), forKey: "currentDay")
+            self.defaults.set(date, forKey: "lastUpdated")
             if(nextHourSymbol != "Regn" && next6HoursSymbol != "Regn" && next12HoursSymbol != "Regn") {
                 self.symbolImage.image = UIImage(named: "sun")
                 self.infoLabel.text = "Sol i dag, ingen paraply trengs!!"
                 self.defaults.set("Sol", forKey: "weather")
+                self.currentWeather = "Sol"
             } else {
                 self.symbolImage.image = UIImage(named: "umbrella")
                 self.infoLabel.text = "I dag blir det vått, ha paraplyen klar!"
                 self.defaults.set("Regn", forKey: "weather")
+                self.currentWeather = "Regn"
             }
         }
-        
+        //Kjører animasjoner etter fetching er fullført.
+        animations()
     }
 }

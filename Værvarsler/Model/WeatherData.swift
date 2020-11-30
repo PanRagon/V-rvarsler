@@ -1,10 +1,4 @@
-//
-//  WeatherData.swift
-//  Værvarsler
-//
-//  Created by Kandidatnummer 10042 on 25/11/2020.
-//  Copyright © 2020 Kandidatnummer 10042. All rights reserved.
-//
+
 
 //Oppsettet under er basert på Section 13 fra Angela Yu sitt
 //Udemy kurs. Referert til i README
