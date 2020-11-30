@@ -39,7 +39,6 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, WeatherAP
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         //Denne løsningen for å oppdatere location til brukerens posisjon er tatt herifra: https://stackoverflow.com/a/25451592/14283546
         if let location = locations.last{
-            print("Hey there")
             weatherAPI.fetchWeather(lat: Float(location.coordinate.latitude), lon: Float(location.coordinate.longitude))
         }
     }

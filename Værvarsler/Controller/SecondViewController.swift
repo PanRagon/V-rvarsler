@@ -16,6 +16,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
 
     let locationManager = CLLocationManager()
     let pin = MKPointAnnotation()
+    var userLocation: CLLocationCoordinate2D = CLLocationCoordinate2D()
     var mapLocation: CLLocationCoordinate2D = CLLocationCoordinate2D()
     var containerVC: MapContainerViewController? = nil
     @IBOutlet var mapView: MKMapView!
@@ -23,11 +24,12 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
     @IBAction func switchChanged(_ sender: UISwitch) {
         if(mapSwitch.isOn) {
             mapView.showsUserLocation = true
-            locationManager.startUpdatingLocation()
             mapView.removeAnnotation(pin)
+            NotificationCenter.default.post(name: .didRecieveLocation, object: nil, userInfo: ["lat":Float(userLocation.latitude), "lon":Float(userLocation.longitude)])
         } else {
             mapView.showsUserLocation = false
             mapView.addAnnotation(pin)
+            NotificationCenter.default.post(name: .didRecieveLocation, object: nil, userInfo: ["lat":Float(mapLocation.latitude), "lon":Float(mapLocation.longitude)])
         }
     }
 
@@ -70,7 +72,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
             self.mapView.setRegion(region, animated: true)
             pin.coordinate = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
             LocationData.data.setLocation(lat: Float(location.coordinate.latitude), lon: Float(location.coordinate.longitude))
-            mapLocation = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+            userLocation = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
             NotificationCenter.default.post(name: .didRecieveLocation, object: nil, userInfo: ["lat":Float(location.coordinate.latitude), "lon":Float(location.coordinate.longitude)])
         }
     }
